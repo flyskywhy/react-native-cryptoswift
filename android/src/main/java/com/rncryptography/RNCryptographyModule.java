@@ -1,5 +1,4 @@
-
-package com.reactlibrary;
+package com.rncryptography;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;

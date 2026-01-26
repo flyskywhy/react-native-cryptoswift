@@ -1,5 +1,4 @@
-
-package com.reactlibrary;
+package com.rncryptography;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,4 +1,3 @@
-
 #import <React/RCTBridge.h>
 
 @interface RCT_EXTERN_MODULE(RNCryptography, NSObject)
@@ -7,6 +6,25 @@
 +(BOOL)requiresMainQueueSetup {
   return YES;
 }
+
+
+
+RCT_EXTERN_METHOD(encryptAesCcm:(NSArray *)plaintext
+                  key:(NSArray *)key
+                  iv:(NSArray *)iv
+                  tagLength:(NSInteger)tagLength
+                  aad:(NSArray *)aad
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(decryptAesCcm:(NSArray *)ciphertext
+                  key:(NSArray *)key
+                  iv:(NSArray *)iv
+                  authTag:(NSArray *)authTag
+                  tagLength:(NSInteger)tagLength
+                  aad:(NSArray *)aad
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
 
 
 RCT_EXTERN_METHOD(encryptAES:(NSString *)message

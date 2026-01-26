@@ -1,21 +1,28 @@
+# react-native-cryptoswift
 
-# react-native-cryptography
+[![npm version](http://img.shields.io/npm/v/@flyskywhy/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/@flyskywhy/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/@flyskywhy/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
 
-Important notes: On iOS, this is not a library project - see installation instructions
+Fork from [react-native-cryptography](https://www.npmjs.com/package/react-native-cryptography) v0.0.2
 
-- iOS `CryptoSwift`
+Crypto e.g. "ase-128-ccm" is invalid (always say `Error: CipherFactory.createCipher(...): Unknown cipher ase-128-ccm`) on iOS with [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) , so be this `react-native-cryptoswift` .
+
+- iOS [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwi)
 
 - Android `BouncyCastle` !TODO finish md5 and sha256!
 
-## Cryptographic functions
+## Cryptoswift functions
 
 ### Symetric ciphering
 
 func      | ios                  | android
 ----------|----------------------|--------------
-`AES 128` | ✓                    | ✓
-`AES 192` | ✓                    | ✓
-`AES 256` | ✓                    | ✓
+`AES CCM` | ✓                    | waiting PR
+`AES 128` | waiting PR           | ✓
+`AES 192` | waiting PR           | ✓
+`AES 256` | waiting PR           | ✓
 
 - AES 128 (pass 16 bytes key and iv)
 
@@ -27,53 +34,20 @@ func      | ios                  | android
 
 func      | ios                  | android
 ----------|----------------------|--------------
-`MD5`     | ✓                    | TODO
-`SHA256`  | ✓                    | TODO
+`MD5`     | waiting PR           | TODO
+`SHA256`  | waiting PR           | TODO
 
-## Getting started
+## Install
 
-`$ npm install react-native-cryptography --save`
+`$ npm install react-native-cryptoswift --save`
 
-### Mostly automatic installation
-
-Android:
-
-`$ react-native link react-native-cryptography`
-
-iOS: See manual installation section
-
-### Manual installation
-
-
-#### iOS
-
-1. In XCode, in the project navigator, right click `<Your Target>` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-cryptography` and add `RNCryptography.m + RNCryptography.swift`
-3. Accept the bridging header creation and add `#import <React/RCTBridge.h>`
-4. Add a `Podfile` in the sources root dir and add `pod 'CryptoSwift'` to it.
-5. `cd ios/ && pod install`
-6. Reopen xcode using your app workspace
-
-#### Android
-
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNCryptographyPackage;` to the imports at the top of the file
-  - Add `new RNCryptographyPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':react-native-cryptography'
-  	project(':react-native-cryptography').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-cryptography/android')
-  	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':react-native-cryptography')
-  	```
+iOS: `cd ios/ && pod install`
 
 ## Usage
 ```javascript
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import RNCryptography from 'react-native-cryptography';
+import CryptoSwift from 'react-native-cryptoswift';
 
 const styles = StyleSheet.create({
   container: {
@@ -85,34 +59,40 @@ const styles = StyleSheet.create({
 });
 
 export default class App extends Component {
-  static AES_KEY_128 = 'keykeykeykeykeyk';
-  static AES_IV_128 = 'drowssapdrowssap';
+  static AES_KEY_128 = Array.from('keykeykeykeykeyk').map(char => char.charCodeAt());
+  static AES_IV = Array.from('drowssapdrow').map(char => char.charCodeAt());
+  static AUTH_TAG_LENGTH = 4;
 
-  encryptAES() {
-    RNCryptography.encryptAES('Hello, I am the message to cipher', App.AES_KEY_128, App.AES_IV_128) 
-      .then(value => console.log(value))
+  encryptAesCcm() {
+    const utf8text = 'Hello, I am the message to cipher';
+    const plaintext = Array.from(utf8text).map(char => char.charCodeAt());
+    CryptoSwift.encryptAesCcm(plaintext, App.AES_KEY_128, App.AES_IV, App.AUTH_TAG_LENGTH)
+      .then(({ciphertext, authTag}) => {
+        this.encrypted = {ciphertext, authTag};
+        console.log(this.encrypted);
+      })
       .catch(err => console.error(err));
   }
 
-  decryptAES() {
-    RNCryptography.decryptAES('FNblGLlDskkoe1vLbwtTJ8xeIXmQp3udaFL8KI91hfGhYFyqA0eLcfoy3iFFw2af', App.AES_KEY_128, App.AES_IV_128) 
-      .then(value => console.log(value))
+  decryptAesCcm() {
+    CryptoSwift.decryptAesCcm(this.encrypted.ciphertext, App.AES_KEY_128, App.AES_IV, this.encrypted.authTag, App.AUTH_TAG_LENGTH)
+      .then(plaintext => console.log(plaintext))
       .catch(err => console.error(err));
   }
 
   md5() {
-    RNCryptography.md5('string to digest').then(digest => console.log(digest));
+    // CryptoSwift.md5('string to digest').then(digest => console.log(digest));
   }
 
   sha256() {
-    RNCryptography.sha256('string to digest').then(digest => console.log(digest));
+    // CryptoSwift.sha256('string to digest').then(digest => console.log(digest));
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button onPress={this.encryptAES} title={'encrypt with AES'} />
-        <Button onPress={this.decryptAES} title={'decrypt AES'} />
+        <Button onPress={this.encryptAesCcm} title={'encrypt with AES'} />
+        <Button onPress={this.decryptAesCcm} title={'decrypt AES'} />
         <Button onPress={this.md5} title={'MD5'} />
         <Button onPress={this.sha256} title={'SHA256'} />
       </View>

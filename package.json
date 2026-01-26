@@ -1,12 +1,13 @@
 
 {
-  "name": "react-native-cryptography",
+  "name": "react-native-cryptoswift",
   "version": "0.0.2",
-  "description": "Description RN lib of standard cryptographic functions",
+  "description": "standard cryptographic functions with CryptoSwift on iOS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ybonnetain/react-native-cryptography"
+    "url": "https://github.com/flyskywhy/react-native-cryptoswift"
   },
+  "homepage": "https://github.com/flyskywhy/react-native-cryptoswift#readme",
   "main": "index.js",
   "nativePackage": true,
   "scripts": {
@@ -17,14 +18,20 @@
     "crypto",
     "cryptography",
     "AES",
+    "AES-CCM",
+    "CCM",
     "MD5",
     "SHA256",
     "ios",
     "android"
   ],
   "author": "Yann Bonnetain <yann.bonnetain@gmail.com>",
-  "license": "MIT",
-  "peerDependencies": {
-    "react-native": "^0.41.2"
-  }
+  "contributors": [
+    {
+      "name": "Li Zheng",
+      "email": "flyskywhy@gmail.com",
+      "url": "https://github.com/flyskywhy"
+    }
+  ],
+  "license": "MIT"
 }

@@ -1,7 +1,7 @@
 
 {
   "name": "react-native-cryptoswift",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "standard cryptographic functions with CryptoSwift on iOS",
   "repository": {
     "type": "git",

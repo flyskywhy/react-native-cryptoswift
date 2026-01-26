@@ -17,6 +17,4 @@ Pod::Spec.new do |s|
   s.dependency "CryptoSwift"
 
   s.dependency "React-Core"
-
-
 end

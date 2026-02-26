@@ -1,9 +1,9 @@
 # react-native-cryptoswift
 
-[![npm version](http://img.shields.io/npm/v/@flyskywhy/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
-[![npm downloads](http://img.shields.io/npm/dm/@flyskywhy/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
-[![npm licence](http://img.shields.io/npm/l/@flyskywhy/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
-[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/@flyskywhy/react-native-cryptoswift "View this project on npm")
+[![npm version](http://img.shields.io/npm/v/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/react-native-cryptoswift "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/react-native-cryptoswift "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/react-native-cryptoswift.svg?style=flat-square)](https://npmjs.org/package/react-native-cryptoswift "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-cryptoswift "View this project on npm")
 
 Fork from [react-native-cryptography](https://www.npmjs.com/package/react-native-cryptography) v0.0.2
 

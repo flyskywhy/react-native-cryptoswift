@@ -26,6 +26,23 @@ RCT_EXTERN_METHOD(decryptAesCcm:(NSArray *)ciphertext
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(encryptAesGcm:(NSArray *)plaintext
+                  key:(NSArray *)key
+                  iv:(NSArray *)iv
+                  tagLength:(NSInteger)tagLength
+                  aad:(NSArray *)aad
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(decryptAesGcm:(NSArray *)ciphertext
+                  key:(NSArray *)key
+                  iv:(NSArray *)iv
+                  authTag:(NSArray *)authTag
+                  tagLength:(NSInteger)tagLength
+                  aad:(NSArray *)aad
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
 
 RCT_EXTERN_METHOD(encryptAES:(NSString *)message
                   key:(NSString *)key

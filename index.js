@@ -32,6 +32,25 @@ export default {
       toBytes(aad),
     ),
 
+  // AES-GCM only works on iOS, PR is welcome
+  encryptAesGcm: (message, key, iv, tagLength, aad = []) =>
+    RNCryptography.encryptAesGcm(
+      toBytes(message),
+      toBytes(key),
+      toBytes(iv),
+      tagLength,
+      toBytes(aad),
+    ),
+  decryptAesGcm: (ciphertext, key, iv, authTag, tagLength, aad = []) =>
+    RNCryptography.decryptAesGcm(
+      toBytes(ciphertext),
+      toBytes(key),
+      toBytes(iv),
+      toBytes(authTag),
+      tagLength,
+      toBytes(aad),
+    ),
+
   // AES only works on Android, PR is welcome
   encryptAES: (message, key, iv) => RNCryptography.encryptAES(message, key, iv),
   decryptAES: (cipher, key, iv) => RNCryptography.decryptAES(cipher, key, iv),

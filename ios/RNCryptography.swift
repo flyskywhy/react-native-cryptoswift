@@ -84,6 +84,50 @@ class RNCryptography : NSObject {
     }
 
 
+    @objc(encryptAesGcm:key:iv:tagLength:aad:resolver:rejecter:)
+    func encryptAesGcm (_ plaintext : Array<UInt8>,
+                        key: Array<UInt8>,
+                        iv: Array<UInt8>,
+                        tagLength: Int,
+                        aad: Array<UInt8>,
+                        resolver resolve: @escaping RCTPromiseResolveBlock,
+                        rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+        do {
+            let gcm = GCM(iv: iv, additionalAuthenticatedData: aad, tagLength: tagLength, mode: .combined)
+            let aes = try AES(key: key, blockMode: gcm, padding: .noPadding)
+            let result = try aes.encrypt(plaintext)
+            let splitIndex = max(0, result.count - tagLength)
+            let ciphertext = Array(result.prefix(upTo: splitIndex))
+            let authTag = Array(result.suffix(from: splitIndex))
+            resolve(["ciphertext": ciphertext, "authTag": authTag])
+        } catch {
+            let error = NSError(domain: errorDomain, code: errorCodeAesEncrypt, userInfo: nil)
+            reject(String(errorCodeAesEncrypt), "cannot encrypt (AES-GCM)", error)
+        }
+    }
+
+
+    @objc(decryptAesGcm:key:iv:authTag:tagLength:aad:resolver:rejecter:)
+    func decryptAesGcm (_ ciphertext : Array<UInt8>,
+                        key: Array<UInt8>,
+                        iv: Array<UInt8>,
+                        authTag: Array<UInt8>,
+                        tagLength: Int,
+                        aad: Array<UInt8>,
+                        resolver resolve: @escaping RCTPromiseResolveBlock,
+                        rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+        do {
+            let gcm = GCM(iv: iv, authenticationTag:authTag, additionalAuthenticatedData: aad, mode: .detached)
+            let aes = try AES(key: key, blockMode: gcm, padding: .noPadding)
+            let plaintext = try aes.decrypt(ciphertext)
+            resolve(plaintext)
+        } catch {
+            let error = NSError(domain: errorDomain, code: errorCodeAesDecrypt, userInfo: nil)
+            reject(String(errorCodeAesDecrypt), "cannot decrypt (AES-GCM)", error)
+        }
+    }
+
+
     @objc(encryptAES:key:iv:resolver:rejecter:)
     func encryptAES (_ message : String,
                      key: String,

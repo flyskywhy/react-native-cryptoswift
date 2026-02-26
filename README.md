@@ -20,6 +20,7 @@ Crypto e.g. "ase-128-ccm" is invalid (always say `Error: CipherFactory.createCip
 func      | ios                  | android
 ----------|----------------------|--------------
 `AES CCM` | ✓                    | waiting PR
+`AES GCM` | ✓                    | waiting PR
 `AES 128` | waiting PR           | ✓
 `AES 192` | waiting PR           | ✓
 `AES 256` | waiting PR           | ✓

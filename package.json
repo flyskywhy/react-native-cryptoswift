@@ -1,6 +1,6 @@
 {
   "name": "react-native-cryptoswift",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "standard cryptographic functions with CryptoSwift on iOS",
   "repository": {
     "type": "git",
@@ -19,7 +19,9 @@
     "CryptoSwift",
     "AES",
     "AES-CCM",
+    "AES-GCM",
     "CCM",
+    "GCM",
     "MD5",
     "SHA256",
     "ios",
